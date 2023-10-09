@@ -90,6 +90,37 @@ void question_simPi_interval_confiance()
     printf("\n");
 }
 
+void latex()
+{
+    //for(usize i = 1; i < 10000; i*=2)
+    /*
+    for(usize i = 1; i < 1000; i+=1)
+    {
+        printf("(%" usize_format ", %" fmax_format ")\n", i, simPi(i));
+    }*/
+
+    file* f = fopen("test.txt", "w+");
+    check(f != null);
+
+    distribution d = distribution(3, 4, 0.0001);
+    latex_file_figure_begin(f, "nombre de lancé", "approximation de pi");
+    umax nbSimulation = 100000;
+    #define nbLance 10000
+
+    repeat(i, nbSimulation)
+    {
+        fmax pi = simPi(nbLance);
+        d.inc(pi);
+    }
+
+    latex_file_figure_plot_begin(f);
+    d.fprint_latex_data(f);
+    latex_file_figure_plot_end(f);
+    latex_file_figure_end(f, nbSimulation, "moyenne de PI (" to_string(nbLance) " points)");
+    #undef nbLance
+
+    fclose(f);
+}
 
 int main(int argc, char const* argv[])
 {
@@ -102,6 +133,8 @@ int main(int argc, char const* argv[])
 
     u32 init[4]={0x123, 0x234, 0x345, 0x456}, length=4;
     mt_init_by_array(init, length);
+
+    //latex();
 
     question_simPi();
     question_simPi_interval_confiance();

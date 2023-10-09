@@ -4,7 +4,7 @@
 
 fmax distribution::idx_to_val(usize idx)
 {
-    return (idx + offset)*step;
+    return idx*step+offset;
 }
 
 usize distribution::val_to_idx(fmax val)
@@ -31,6 +31,7 @@ void distribution::inc(fmax val, fmax avg)
 {
     unused(avg);
     usize idx = val_to_idx(val);
+    if(idx > values.length()){ return; }
     //check(values[idx] == 0);
     maxi = max<usize>(maxi, ++values[idx]);
     nb += 1;
@@ -68,6 +69,6 @@ void distribution::fprint_latex_data(file* f)
 {
     foreach_idx(i, values)
     {
-        fprintf(f, "(%6.2" fmax_format ", %6" fmax_format ") %% %" usize_format " repetitions\n", idx_to_val(i), ((fmax)values[i]*(fmax)100)/(fmax)nb, nb);
+        fprintf(f, "(%7.4" fmax_format ", %6" fmax_format ") %% %" usize_format " repetitions\n", idx_to_val(i), ((fmax)values[i]*(fmax)100)/(fmax)nb, nb);
     }
 }
