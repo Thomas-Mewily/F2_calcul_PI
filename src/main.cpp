@@ -74,19 +74,19 @@ fmax simPi_interval_confiance(umax nbLance, umax nbExperience, fmax t_coef)
 
     free(pis);
 
-    printf("simPi_interval_confiance(%12" umax_format " lancés, %3" umax_format " repetitions n, %9.7" fmax_format " t_coef) : interval de confiance = +/- %9.7"  fmax_format ", pi= %9.7" fmax_format "\n", nbLance, nbExperience, t_coef, r, moyenne);
+    printf("simPi_interval_confiance(%12" umax_format " lancés, %3" umax_format " repetitions n, %9.7" fmax_format " t_coef) => pi= %9.7" fmax_format " +/- %9.7" fmax_format "\n", nbLance, nbExperience, t_coef, moyenne, r);
     return r;
 }
 
 void question_simPi_interval_confiance()
 {
-    umax nbLance = 100000000;
+    umax nbLance = 10000000;
     simPi_interval_confiance(nbLance, 1,  12.706);
     simPi_interval_confiance(nbLance, 2,  4.303);
     simPi_interval_confiance(nbLance, 10, 2.228);
     simPi_interval_confiance(nbLance, 20, 2.086);
     simPi_interval_confiance(nbLance, 30, 2.042);
-    simPi_interval_confiance(nbLance, 40, 2.021);
+    //simPi_interval_confiance(nbLance, 40, 2.021);
     printf("\n");
 }
 
