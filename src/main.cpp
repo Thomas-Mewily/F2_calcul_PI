@@ -150,15 +150,6 @@ fmax simPiDroite(umax nbPoint, fmax coefApetit)
     return  4*(90/coefApetit)*(aire_g+aire_d*((fmax)aire_d*nbInside)/nbPoint);
 }
 
-void testPi()
-{
-    umax nbLance = 100000;
-    for(fmax acoef = 0.001; acoef <= 0.1; acoef+=0.01)
-    {
-        printf("a=%" fmax_format ", pi=%" fmax_format " avec %" umax_format " lancés\n", acoef,simPiDroite(nbLance, acoef), nbLance);
-    }
-}
-
 int main(int argc, char const* argv[])
 {
     unused(argc);
@@ -176,7 +167,6 @@ int main(int argc, char const* argv[])
     question_simPi();
     question_simPi_interval_confiance();
     question_simPi_moyennee(); // à la fin car ça prends pas mal de temps
-    //testPi();
     
     only_in_debug(memory_printf_final());
     only_in_release(printf("fin\n"));
