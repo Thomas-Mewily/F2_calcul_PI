@@ -122,6 +122,43 @@ void latex()
     fclose(f);
 }
 
+fmax simPiDroite(umax nbPoint, fmax coefApetit)
+{
+    // developpement limité
+    fmax X = 1-coefApetit*coefApetit/2;
+    fmax Xend = 1-X;
+
+    umax nbInside = 0;
+    repeat(i, nbPoint)
+    {
+        fmax x;
+        fmax y;
+        do
+        {
+            x = mt_real()*Xend+X;
+            y = mt_real();
+        } while(y > coefApetit*x);
+        if(x*x+y*y <= 1)
+        {
+            nbInside++;
+        }
+    }
+
+    fmax Ymiddle = X*coefApetit;
+    fmax aire_g = X*Ymiddle/2;
+    fmax aire_d = (Ymiddle+ coefApetit)/2*Xend;
+    return  4*(90/coefApetit)*(aire_g+aire_d*((fmax)aire_d*nbInside)/nbPoint);
+}
+
+void testPi()
+{
+    umax nbLance = 100000;
+    for(fmax acoef = 0.001; acoef <= 0.1; acoef+=0.01)
+    {
+        printf("a=%" fmax_format ", pi=%" fmax_format " avec %" umax_format " lancés\n", acoef,simPiDroite(nbLance, acoef), nbLance);
+    }
+}
+
 int main(int argc, char const* argv[])
 {
     unused(argc);
@@ -139,6 +176,7 @@ int main(int argc, char const* argv[])
     question_simPi();
     question_simPi_interval_confiance();
     question_simPi_moyennee(); // à la fin car ça prends pas mal de temps
+    //testPi();
     
     only_in_debug(memory_printf_final());
     only_in_release(printf("fin\n"));
